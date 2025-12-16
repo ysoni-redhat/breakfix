@@ -7,10 +7,11 @@ components:
     container:
       image: registry.redhat.io/devspaces/udi-rhel8:latest
       mountSources: true
-      command:
-        - sh
-        - -c
-        - |
-          code-server \
-            --install-extension redhat.mta-vscode-extension && \
-          sleep infinity
+      lifecycle:
+        postStart:
+          exec:
+            command:
+              - sh
+              - -c
+              - |
+                code-server --install-extension redhat.mta-vscode-extension || true
